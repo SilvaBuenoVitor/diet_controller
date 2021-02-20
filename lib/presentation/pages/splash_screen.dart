@@ -1,4 +1,5 @@
 import 'package:diet_controller/cubit/food_cubit.dart';
+import 'package:diet_controller/cubit/login_cubit.dart';
 import 'package:diet_controller/presentation/components/custom_card.dart';
 import 'package:diet_controller/presentation/components/custom_text_montserrat.dart';
 import 'package:diet_controller/utils/route_constants.dart';
@@ -26,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> initApp() async{
-    await context.read<FoodCubit>().getFood();
+    await context.read<FoodCubit>().getFood(context.read<LoginCubit>().id);
     setState(() {
       _loadingFoodCards = false;
     });

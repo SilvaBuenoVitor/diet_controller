@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 
 
 class FoodRepository{
-  Future<List<Food>> fetchFood() async{
+  Future<List<Food>> fetchFood(int userId) async{
     final List<Food> _listFood = new List<Food>();
     try {
       final response = await http.get(
-        Api.food+'/0',
+        Api.food+'/'+userId.toString(),
         headers: <String, String>{'Content-Type':'application/json; charset=UTF-8'},
       );  
       final it = jsonDecode(response.body).iterator;

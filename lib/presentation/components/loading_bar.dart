@@ -8,8 +8,8 @@ class LoadingBar extends StatelessWidget {
 
   const LoadingBar({
     Key key,
-    this.accentColor = UIColors.primary,
-    this.backgroundColor = UIColors.secondary,
+    this.accentColor = UIColors.gradient1,
+    this.backgroundColor = UIColors.gradient2,
   }) : super(key: key);
 
   @override

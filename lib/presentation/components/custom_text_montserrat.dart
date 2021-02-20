@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:diet_controller/utils/ui_constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomText extends StatelessWidget {
   final String text;
@@ -31,6 +32,7 @@ class CustomText extends StatelessWidget {
         maxLines: maxLines ?? 999999,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
+          fontFamily: GoogleFonts.nunitoSans().fontFamily,
           fontSize: fontSize ?? FontSize.normal,
           fontWeight: bold ? FontWeight.bold : FontWeight.normal,
           color: color ?? Colors.black,

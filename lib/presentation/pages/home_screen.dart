@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-               BlocConsumer<FoodCubit, FoodState>(
+                BlocConsumer<FoodCubit, FoodState>(
                  builder: (context, state){
                    if(state is FoodInitial){
                      return CircularProgressIndicator();
@@ -45,11 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           )
         ),
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: null,
-        //   tooltip: 'Increment',
-        //   child: Icon(Icons.add),
-        // ),
       ),
       onWillPop: _onWillPop
     ); 

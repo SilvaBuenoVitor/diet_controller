@@ -10,10 +10,10 @@ class FoodCubit extends Cubit<FoodState> {
   FoodCubit(this._repository) : super(FoodInitial());
 
   //add user id later
-  Future<void> getFood() async{
+  Future<void> getFood(int userId) async{
     try {
       emit(FoodLoading());
-      final list = await _repository.fetchFood();
+      final list = await _repository.fetchFood(userId);
       emit(FoodLoaded(list));
     } catch (e) {
       emit(FoodError("Num deu bom consagra"));

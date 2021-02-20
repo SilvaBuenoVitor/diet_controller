@@ -2,70 +2,132 @@ import 'package:diet_controller/cubit/login_cubit.dart';
 import 'package:diet_controller/presentation/components/custom_card.dart';
 import 'package:diet_controller/presentation/components/custom_flat_button.dart';
 import 'package:diet_controller/presentation/components/custom_text_montserrat.dart';
+import 'package:diet_controller/presentation/components/loading_bar.dart';
 import 'package:diet_controller/presentation/components/vertical_spacing.dart';
+import 'package:diet_controller/presentation/components/wave_widget.dart';
 import 'package:diet_controller/utils/route_constants.dart';
 import 'package:diet_controller/utils/ui_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  AnimationController _controller;
+  Animation<Offset> _offsetAnimation;
+  bool _loading = false;
+  @override
+  void initState() {
+    _controller = AnimationController(duration: const Duration(seconds: 3), vsync: this,)..forward();
+    _offsetAnimation = Tween<Offset>(begin: const Offset(0.0,-11), end: Offset.zero ).animate(CurvedAnimation(parent:_controller, curve:Curves.easeOutBack));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UIColors.background,
-      body: Padding(
-        padding: EdgeInsets.all(Spacing.normal),
-        child:Column(
-          children: [
-            new Spacer(),
-             BlocConsumer<LoginCubit, LoginState>(
-              builder: (context, state) {
-                if(state is LoginInitial){
-                  return card(false);
-                } else if(state is LoginFailed){
-                  return card(false);
-                }else if(state is LoginSuccess){
-                  Future.delayed(Duration.zero,()=>Navigator.pushReplacementNamed(context, KRoutes.splashScreen));
-                }
-                return card(true);
-              }, 
-              listener: (context, state) {
-                if(state is LoginError){
-                  Scaffold.of(context).showSnackBar(SnackBar(content: CustomText("Algo deu errado")));
-                  return card(false);
-                }
-              },
-            ),
-            Row(children: [
-              Expanded(child: Container(), flex: 1,),
-              Expanded(child: Divider(color: Colors.black,), flex: 8,),
-              Expanded(child: Container(), flex: 1,),
-            ],),
-            new Spacer(),
-          ],
-        )
+      // backgroundColor: UIColors.background,
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height/2.5,
+            width: MediaQuery.of(context).size.width,
+            color: UIColors.background,
+          ),
+          AnimatedPositioned(
+            child: WaveWidget(
+              size: MediaQuery.of(context).size,
+              yOffset: MediaQuery.of(context).size.height/3,
+            ), 
+            duration: Duration(milliseconds: 500),
+            curve: Curves.easeOutQuad,
+          ),
+          Container(
+            child:Padding(
+              padding: EdgeInsets.all(Spacing.normal),
+              child:Column(
+                children: [
+                  new Spacer(),
+                  Row(
+                    children: [
+                        Text("Atlas",style: GoogleFonts.notoSans(fontSize: FontSize.mainTitle,color: UIColors.loginGradient[1]))
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                  Row(
+                    children: [
+                      SlideTransition(
+                        position: _offsetAnimation, 
+                        child:
+                      Text("Sua vida no lugar",style: GoogleFonts.notoSans(fontSize: FontSize.big,color:Colors.white),),
+                      ),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                  VerticalSpacing(spacing: Spacing.huge,),
+                  Row(children: [
+                    Expanded(child: Container(), flex: 1,),
+                    Expanded(child: Divider(color: Colors.white,), flex: 8,),
+                    Expanded(child: Container(), flex: 1,),
+                  ],),
+                  BlocConsumer<LoginCubit, LoginState>(
+                    builder: (context, state) {
+                      if(state is LoginSuccess){
+                        Future.delayed(Duration.zero,()=>Navigator.pushReplacementNamed(context, KRoutes.splashScreen));
+                      }
+                      return card();
+                    }, 
+                    listener: (context, state) {
+                      if(state is LoginError){
+                        Scaffold.of(context).showSnackBar(SnackBar(content: CustomText("Algo deu errado"), backgroundColor: Colors.white,));
+                        setState(() {
+                          _loading = false;
+                        });
+                      }else if(state is LoginFailed){
+                        Scaffold.of(context).showSnackBar(SnackBar(content: Row(mainAxisAlignment: MainAxisAlignment.center ,children:[CustomText("Email ou Senha Incorretos")]), backgroundColor: Colors.white,));
+                        setState(() {
+                          _loading = false;
+                        });
+                      }else if(state is LoginLoading){
+                        setState(() {
+                          _loading = true;
+                        });
+                      }else if(state is LoginInitial){
+                        setState(() {
+                          _loading = false;
+                        });
+                      }
+                    },
+                  ),
+                  Row(children: [
+                    Expanded(child: Container(), flex: 1,),
+                    Expanded(child: Divider(color: Colors.white,), flex: 8,),
+                    Expanded(child: Container(), flex: 1,),
+                  ],),
+                  new Spacer(),
+                ],
+              )
+            )
+          ),
+        ],
       ) 
     );
   }
 
-  Widget card(bool _loading){
+  Widget card(){
     return
     CustomCard(
       child: Form(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            VerticalSpacing(),
-            CustomText("FAÇA SEU LOGIN:", ),
             VerticalSpacing(),
             Row(
               children: [
@@ -103,13 +165,19 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
             VerticalSpacing(),
-            CustomButton(child: CustomText("ENTRAR", bold: true,fontSize: FontSize.big,), onPressed: ()=>login(context), backgroundColor: UIColors.transparent,),
+            CustomButton(child: CustomText("ENTRAR", bold: true,fontSize: FontSize.big,), onPressed: ()=>login(context), backgroundColor: UIColors.transparent,disable: _loading,),
             VerticalSpacing(),
+            loadingBar(_loading),
           ],
         )
       )
     );  
   }
+
+  Widget loadingBar(bool loading){
+    return loading ? LoadingBar() : Container();
+  }
+
   void login(BuildContext context) async {
     final loginCubit = context.read<LoginCubit>();
     loginCubit.getLogin(_emailController.text,_passwordController.text);

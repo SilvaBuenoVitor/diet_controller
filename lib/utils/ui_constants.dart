@@ -9,6 +9,12 @@ class UIColors {
   static const Color secondaryDarker = Color(0xff371f4f);
   static const Color transparent = Color(0x00ffffff);
   static const Color background = Color(0xffF2F2F2);
+  static const List<Color> loginGradient = [
+    Color(0xFF2193b0),
+    Color(0xFF6dd5ed),
+  ];
+  static const Color gradient1 = Color(0xFF2193b0);
+  static const Color gradient2 = Color(0xFF6dd5ed);
 }
 
 class FontSize {
@@ -18,6 +24,7 @@ class FontSize {
   static const double normal = 24;
   static const double big = 28;
   static const double huge = 38;
+  static const double mainTitle = 76;
 }
 
 class FontColors {
