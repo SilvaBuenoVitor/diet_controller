@@ -7,7 +7,10 @@ class FadeInAnimation extends StatefulWidget {
   final Offset offsetBegin;
   final Offset offsetEnd;
   final Curve curve;
-  FadeInAnimation(this.widget, {this.duration,this.repeat, this.offsetBegin, this.offsetEnd, this.curve});
+  final double rotationBegin;
+  final double rotationEnd;
+  final Curve rotationCurve;
+  FadeInAnimation(this.widget, {this.duration,this.repeat, this.offsetBegin, this.offsetEnd, this.curve, this.rotationBegin, this.rotationEnd, this.rotationCurve});
   @override
   _FadeInAnimationState createState() => _FadeInAnimationState();
 }
@@ -27,7 +30,7 @@ class _FadeInAnimationState extends State<FadeInAnimation> with SingleTickerProv
     _offsetBegin = widget.offsetBegin;
     _offsetEnd = widget.offsetEnd;
     _curve = widget.curve;
-    if(_repeat){
+    if(_repeat!=null && _repeat == true){
       _controller = AnimationController(
         duration: Duration(seconds: _durationTime ?? 2),
         vsync: this, 
@@ -53,9 +56,12 @@ class _FadeInAnimationState extends State<FadeInAnimation> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    return SlideTransition(
-      position: _offsetAnimation,
-      child: widget.widget,
+    return RotationTransition(
+      turns: Tween(begin: widget.rotationBegin ?? 0.0,end:widget.rotationEnd ?? 0.0).animate(CurvedAnimation(parent: _controller, curve: widget.rotationCurve ?? Curves.linear)),
+      child:SlideTransition(
+        position: _offsetAnimation,
+        child: widget.widget,
+      )
     );
   }
 
