@@ -12,7 +12,7 @@ class FoodRepository{
         Api.food+'/'+userId.toString(),
         headers: <String, String>{'Content-Type':'application/json; charset=UTF-8'},
       );  
-      final it = jsonDecode(response.body).iterator;
+      final it = jsonDecode(utf8.decode(response.bodyBytes)).iterator;
       while(it.moveNext()){
         _listFood.add(Food.fromJson(it.current));
       }

@@ -7,7 +7,8 @@ class CustomScaffold extends StatefulWidget {
   final AppBar appBar;
   final Widget body;
   final FloatingActionButton floatingActionButton;
-  CustomScaffold(this.body,{this.floatingActionButton,this.appBar});
+  final Widget bottomNavigationBar;
+  CustomScaffold(this.body,{this.floatingActionButton,this.appBar, this.bottomNavigationBar});
   @override
   _CustomScaffoldState createState() => _CustomScaffoldState();
 }
@@ -21,6 +22,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
       child: Scaffold(
+        extendBody: true,
         backgroundColor: UIColors.background,
         appBar: widget.appBar ?? null,
         body: Stack(
@@ -38,12 +40,11 @@ class _CustomScaffoldState extends State<CustomScaffold> {
             duration: Duration(milliseconds: 500),
             curve: Curves.easeOutQuad,
           ),
-            SingleChildScrollView(
-              child: SafeArea(child: widget.body),
-            ),
+          SafeArea(child: widget.body),
           ]
         ),
         floatingActionButton: widget.floatingActionButton,
+        bottomNavigationBar: widget.bottomNavigationBar,
       ),
     );
   }

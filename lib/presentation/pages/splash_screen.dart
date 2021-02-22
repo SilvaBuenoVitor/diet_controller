@@ -1,6 +1,6 @@
 import 'package:diet_controller/cubit/food_cubit.dart';
 import 'package:diet_controller/cubit/login_cubit.dart';
-import 'package:diet_controller/presentation/components/custom_card.dart';
+import 'package:diet_controller/cubit/meal_cubit.dart';
 import 'package:diet_controller/presentation/components/custom_scaffold.dart';
 import 'package:diet_controller/presentation/components/custom_text_montserrat.dart';
 import 'package:diet_controller/presentation/components/fade_in_animation.dart';
@@ -15,6 +15,7 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
+//TODO: future implementation of local cache for instant login
 class _SplashScreenState extends State<SplashScreen> {
   bool _loadingFoodCards = true;
   
@@ -29,8 +30,10 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
+  //initialization of app data using the context cubits, currently theres a minimum of 2 seconds delay due to the animation, maybe change that in the future
   Future<void> initApp() async{
     await context.read<FoodCubit>().getFood(context.read<LoginCubit>().id);
+    await context.read<MealCubit>().getMeal(context.read<LoginCubit>().id);
     setState(() {
       _loadingFoodCards = false;
     });
@@ -40,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     if (!_loadingFoodCards) {
+      //2 seconds hardcoded wait for animation purposes, future changes may alter it
       Future.delayed(Duration(seconds: 2),()=>Navigator.of(context).pushReplacementNamed(KRoutes.dashboard)
       );
     }

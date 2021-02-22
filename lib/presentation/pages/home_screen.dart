@@ -1,5 +1,6 @@
 
 import 'package:diet_controller/cubit/food_cubit.dart';
+import 'package:diet_controller/presentation/components/custom_bottom_navigation_bar.dart';
 import 'package:diet_controller/presentation/components/custom_scaffold.dart';
 import 'package:diet_controller/presentation/components/custom_text_montserrat.dart';
 import 'package:diet_controller/presentation/widgets/food_card.dart';
@@ -14,9 +15,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  //main app screen
   @override
   Widget build(BuildContext context) {
+    //willPopScope for pop treatment, implement log out here as well
     return WillPopScope(
       child: CustomScaffold(
         SingleChildScrollView(
@@ -26,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                //foodCubit consumer, will be replaced
                 BlocConsumer<FoodCubit, FoodState>(
                  builder: (context, state){
                    if(state is FoodInitial){
@@ -40,16 +43,18 @@ class _HomeScreenState extends State<HomeScreen> {
                      Scaffold.of(context).showSnackBar(SnackBar(content: CustomText("Erro ao buscar alimentos, a internet está ativa?")));
                    }
                  }
-                )
+                ),
               ],
             ),
           )
         ),
+        bottomNavigationBar: CustomBottomNavigationBar(1,context),
       ),
       onWillPop: _onWillPop
     ); 
   }
 
+  //pop treatment
   Future<bool> _onWillPop() async{
     return (await showDialog(
       context: context,

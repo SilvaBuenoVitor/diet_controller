@@ -1,14 +1,20 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class UIColors {
   static const Color white = Color(0xFFFFFFFF);
-  static const Color whitish = Color(0xFFF0F4FF);
-  static const Color primary = Color(0xFF4E67EB);
-  static const Color secondary = Color(0xFF291D89);
+  static const Color primary = Color(0xFF2193b0);
+  static const Color primaryDark = Color(0xFF006580);
+  static const Color primaryLight = Color(0xFF61c4e2);
+  static const Color secondary = Color(0xFFb03E21);
+  static const Color secondaryLight = Color(0xFFe86d4b);
+  static const Color secondaryDark = Color(0xFF7a0600);
   static const Color grey = Color(0xffe8e8e8);
   static const Color secondaryDarker = Color(0xff371f4f);
   static const Color transparent = Color(0x00ffffff);
-  static const Color background = Color(0xffF2F2F2);
+  static const Color background = Color(0xffe1e2e1);
+  static const Color backgroundLight = Color(0xfff5f5f6);
   static const List<Color> loginGradient = [
     Color(0xFF2193b0),
     Color(0xFF6dd5ed),

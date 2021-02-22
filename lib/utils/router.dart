@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:diet_controller/presentation/pages/food_screen.dart';
 import 'package:diet_controller/presentation/pages/home_screen.dart';
 import 'package:diet_controller/presentation/pages/login_screen.dart';
+import 'package:diet_controller/presentation/pages/meal_screen.dart';
 import 'package:diet_controller/presentation/pages/splash_screen.dart';
 import 'package:diet_controller/utils/route_constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,6 +53,13 @@ class RouterState extends ChangeNotifier{
         currentRoute = KRoutes.splashScreen;
         return MaterialPageRoute(
           builder: (_)=>SplashScreen(),
+          settings: settings
+        );
+      }
+      case '/mealScreen':{
+        currentRoute = KRoutes.mealScreen;
+        return MaterialPageRoute(
+          builder: (_)=>MealScreen(),
           settings: settings
         );
       }

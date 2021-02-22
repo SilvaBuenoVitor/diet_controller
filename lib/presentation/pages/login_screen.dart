@@ -18,11 +18,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
+  //animation and text controllers for the wave efect, falling text and input fields
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
   bool _loading = false;
+
   @override
   void initState() {
     _controller = AnimationController(duration: const Duration(seconds: 3), vsync: this,)..forward();
@@ -33,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: UIColors.background,
+      //stacking of the animation background and the actual screen content
       body: Stack(
         children: [
           Container(
@@ -77,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     Expanded(child: Divider(color: Colors.white,), flex: 8,),
                     Expanded(child: Container(), flex: 1,),
                   ],),
+                  //cubit consumer control the actual widget and error messages displayed
                   BlocConsumer<LoginCubit, LoginState>(
                     builder: (context, state) {
                       if(state is LoginSuccess){
@@ -86,12 +89,12 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     }, 
                     listener: (context, state) {
                       if(state is LoginError){
-                        Scaffold.of(context).showSnackBar(SnackBar(content: CustomText("Algo deu errado"), backgroundColor: Colors.white,));
+                        Scaffold.of(context).showSnackBar(SnackBar(behavior: SnackBarBehavior.floating,content: CustomText("Algo deu errado"), backgroundColor: Colors.white,));
                         setState(() {
                           _loading = false;
                         });
                       }else if(state is LoginFailed){
-                        Scaffold.of(context).showSnackBar(SnackBar(content: Row(mainAxisAlignment: MainAxisAlignment.center ,children:[CustomText("Email ou Senha Incorretos")]), backgroundColor: Colors.white,));
+                        Scaffold.of(context).showSnackBar(SnackBar(behavior: SnackBarBehavior.floating,content: Row(mainAxisAlignment: MainAxisAlignment.center ,children:[CustomText("Email ou Senha Incorretos")]), backgroundColor: Colors.white,));
                         setState(() {
                           _loading = false;
                         });
@@ -121,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     );
   }
 
+  //isolating the login card for a better reading
   Widget card(){
     return
     CustomCard(
@@ -174,10 +178,12 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     );  
   }
 
+  //isolating the loading bar
   Widget loadingBar(bool loading){
     return loading ? LoadingBar() : Container();
   }
 
+  //getting the cubit from context and sending the login request
   void login(BuildContext context) async {
     final loginCubit = context.read<LoginCubit>();
     loginCubit.getLogin(_emailController.text,_passwordController.text);

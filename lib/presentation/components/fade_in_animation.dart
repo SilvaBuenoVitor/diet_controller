@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+//isolated animator with prebuild tuning knobs
 class FadeInAnimation extends StatefulWidget {
   final Widget widget;
   final bool repeat;
