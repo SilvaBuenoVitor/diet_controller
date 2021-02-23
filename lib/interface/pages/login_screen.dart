@@ -1,10 +1,10 @@
 import 'package:diet_controller/cubit/login_cubit.dart';
-import 'package:diet_controller/presentation/components/custom_card.dart';
-import 'package:diet_controller/presentation/components/custom_flat_button.dart';
-import 'package:diet_controller/presentation/components/custom_text_montserrat.dart';
-import 'package:diet_controller/presentation/components/loading_bar.dart';
-import 'package:diet_controller/presentation/components/vertical_spacing.dart';
-import 'package:diet_controller/presentation/components/wave_widget.dart';
+import 'package:diet_controller/interface/components/custom_card.dart';
+import 'package:diet_controller/interface/components/custom_flat_button.dart';
+import 'package:diet_controller/interface/components/custom_text_montserrat.dart';
+import 'package:diet_controller/interface/components/loading_bar.dart';
+import 'package:diet_controller/interface/components/vertical_spacing.dart';
+import 'package:diet_controller/interface/components/wave_widget.dart';
 import 'package:diet_controller/utils/route_constants.dart';
 import 'package:diet_controller/utils/ui_constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   BlocConsumer<LoginCubit, LoginState>(
                     builder: (context, state) {
                       if(state is LoginSuccess){
-                        Future.delayed(Duration.zero,()=>Navigator.pushReplacementNamed(context, KRoutes.splashScreen));
+                        Future.delayed(Duration.zero,()=>Navigator.pushReplacementNamed(context, KRoutes.splashScreen,));
                       }
                       return card();
                     }, 
@@ -186,7 +186,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   //getting the cubit from context and sending the login request
   void login(BuildContext context) async {
     final loginCubit = context.read<LoginCubit>();
-    loginCubit.getLogin(_emailController.text,_passwordController.text);
+    loginCubit.getLogin("email","password");
+    // loginCubit.getLogin(_emailController.text,_passwordController.text);
   }
 
 }

@@ -34,8 +34,12 @@ class FontSize {
 }
 
 class FontColors {
-  static const Color brandPrimary = Color(0xffffca55);
-  static const Color brandSecondary = Color(0xff662d91);
+  static const Color primary = Color(0xFF2193b0);
+  static const Color primaryDark = Color(0xFF006580);
+  static const Color primaryLight = Color(0xFF61c4e2);
+  static const Color secondary = Color(0xFFb03E21);
+  static const Color secondaryLight = Color(0xFFe86d4b);
+  static const Color secondaryDark = Color(0xFF7a0600);
   static const Color black = Color(0xff333333);
   static const Color grey = Color(0xff808080);
   static const Color lightGrey = Color(0xffb3b3b3);

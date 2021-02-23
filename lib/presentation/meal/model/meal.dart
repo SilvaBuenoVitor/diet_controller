@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:diet_controller/interface/food.dart';
+import 'package:diet_controller/presentation/food/model/food.dart';
 import 'package:flutter/material.dart';
 
 class Meal {

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:diet_controller/interface/food.dart';
-import 'package:diet_controller/repositories/food_repository.dart';
+import 'package:diet_controller/presentation/food/food_repository.dart';
+import 'package:diet_controller/presentation/food/model/food.dart';
 import 'package:meta/meta.dart';
 
 part 'food_state.dart';

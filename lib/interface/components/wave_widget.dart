@@ -1,4 +1,5 @@
-import 'package:diet_controller/presentation/components/clipper_widget.dart';
+
+import 'package:diet_controller/interface/components/clipper_widget.dart';
 import 'package:diet_controller/utils/ui_constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as Math;

@@ -1,4 +1,5 @@
-import 'package:diet_controller/presentation/components/wave_widget.dart';
+
+import 'package:diet_controller/interface/components/wave_widget.dart';
 import 'package:diet_controller/utils/ui_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

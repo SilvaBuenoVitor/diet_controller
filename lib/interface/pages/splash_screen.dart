@@ -1,13 +1,14 @@
 import 'package:diet_controller/cubit/food_cubit.dart';
 import 'package:diet_controller/cubit/login_cubit.dart';
 import 'package:diet_controller/cubit/meal_cubit.dart';
-import 'package:diet_controller/presentation/components/custom_scaffold.dart';
-import 'package:diet_controller/presentation/components/custom_text_montserrat.dart';
-import 'package:diet_controller/presentation/components/fade_in_animation.dart';
+import 'package:diet_controller/interface/components/custom_scaffold.dart';
+import 'package:diet_controller/interface/components/custom_text_montserrat.dart';
+import 'package:diet_controller/interface/components/fade_in_animation.dart';
+import 'package:diet_controller/presentation/login/login_repository.dart';
 import 'package:diet_controller/utils/route_constants.dart';
 import 'package:diet_controller/utils/ui_constants.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';    
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class SplashScreen extends StatefulWidget {
 //TODO: future implementation of local cache for instant login
 class _SplashScreenState extends State<SplashScreen> {
   bool _loadingFoodCards = true;
-  
+
   @override
   void initState() {
     initApp();
@@ -32,11 +33,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   //initialization of app data using the context cubits, currently theres a minimum of 2 seconds delay due to the animation, maybe change that in the future
   Future<void> initApp() async{
-    await context.read<FoodCubit>().getFood(context.read<LoginCubit>().id);
-    await context.read<MealCubit>().getMeal(context.read<LoginCubit>().id);
-    setState(() {
-      _loadingFoodCards = false;
-    });
+    final login = context.read<LoginCubit>().state;
+    print(login);
+    if(login is LoginSuccess){
+      await context.read<FoodCubit>().getFood(login.login.id);
+      await context.read<MealCubit>().getMeal(login.login.id);
+      setState(() {
+        _loadingFoodCards = false;
+      });
+    }
   }
   
   

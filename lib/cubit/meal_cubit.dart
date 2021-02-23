@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:diet_controller/repositories/meal_repository.dart';
+import 'package:diet_controller/presentation/meal/meal_repository.dart';
 import 'package:diet_controller/cubit/meal_state.dart';
 
 class MealCubit extends Cubit<MealState> {

@@ -1,9 +1,9 @@
 
 import 'package:diet_controller/cubit/food_cubit.dart';
-import 'package:diet_controller/presentation/components/custom_bottom_navigation_bar.dart';
-import 'package:diet_controller/presentation/components/custom_scaffold.dart';
-import 'package:diet_controller/presentation/components/custom_text_montserrat.dart';
-import 'package:diet_controller/presentation/widgets/food_card.dart';
+import 'package:diet_controller/interface/components/custom_bottom_navigation_bar.dart';
+import 'package:diet_controller/interface/components/custom_scaffold.dart';
+import 'package:diet_controller/interface/components/custom_text_montserrat.dart';
+import 'package:diet_controller/interface/widgets/food_card.dart';
 import 'package:diet_controller/utils/ui_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

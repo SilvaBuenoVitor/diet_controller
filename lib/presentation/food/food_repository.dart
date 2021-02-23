@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:diet_controller/interface/food.dart';
+import 'package:diet_controller/presentation/food/model/food.dart';
 import 'package:diet_controller/utils/api_constants.dart';
 import 'package:http/http.dart' as http;
 

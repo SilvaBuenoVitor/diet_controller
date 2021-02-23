@@ -1,6 +1,7 @@
-import 'package:diet_controller/interface/food.dart';
-import 'package:diet_controller/presentation/components/custom_card.dart';
-import 'package:diet_controller/presentation/components/custom_text_montserrat.dart';
+
+import 'package:diet_controller/interface/components/custom_card.dart';
+import 'package:diet_controller/interface/components/custom_text_montserrat.dart';
+import 'package:diet_controller/presentation/food/model/food.dart';
 import 'package:diet_controller/utils/ui_constants.dart';
 import 'package:flutter/cupertino.dart';
 

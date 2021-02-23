@@ -1,13 +1,14 @@
 import 'package:diet_controller/cubit/meal_cubit.dart';
 import 'package:diet_controller/cubit/meal_state.dart';
-import 'package:diet_controller/interface/food.dart';
-import 'package:diet_controller/interface/meal.dart';
-import 'package:diet_controller/presentation/components/custom_bottom_navigation_bar.dart';
-import 'package:diet_controller/presentation/components/custom_card.dart';
-import 'package:diet_controller/presentation/components/custom_scaffold.dart';
-import 'package:diet_controller/presentation/components/custom_text_montserrat.dart';
-import 'package:diet_controller/presentation/components/horizontal_spacing.dart';
-import 'package:diet_controller/presentation/components/vertical_spacing.dart';
+import 'package:diet_controller/interface/components/custom_bottom_navigation_bar.dart';
+import 'package:diet_controller/interface/components/custom_card.dart';
+import 'package:diet_controller/interface/components/custom_expandable_card.dart';
+import 'package:diet_controller/interface/components/custom_scaffold.dart';
+import 'package:diet_controller/interface/components/custom_text_montserrat.dart';
+import 'package:diet_controller/interface/components/horizontal_spacing.dart';
+import 'package:diet_controller/interface/components/vertical_spacing.dart';
+import 'package:diet_controller/presentation/food/model/food.dart';
+import 'package:diet_controller/presentation/meal/model/meal.dart';
 import 'package:diet_controller/utils/ui_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -81,28 +82,9 @@ Widget _mealScreenCards(List<Meal> list, context){
       ),
       Container(
         width: MediaQuery.of(context).size.width,
-        child: CustomCard(
-          child: Column(
-            children: [
-              VerticalSpacing(spacing: Spacing.small,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  HorizontalSpacing(spacing: Spacing.medium,),
-                  ClipOval(
-                    child: Material(
-                      color: Colors.white, // button color
-                      child: SizedBox(width: 40, height: 40, child: Icon(Icons.bakery_dining,color: Colors.black38,)),
-                    ),
-                  ),
-                  HorizontalSpacing(spacing: Spacing.small,),
-                  CustomText(it.current.name,fontSize: FontSize.big,bold: true,),
-                ],
-              ),
-              _mealItens(it.current.foods),
-              VerticalSpacing(spacing: Spacing.small,),
-            ],
-          ),
+        child: CustomExpandableCard(
+          collapsedChild:  _mealCard(it.current, false),
+          expandedChild: _mealCard(it.current, true)
         ),
       )
     ]);
@@ -110,16 +92,38 @@ Widget _mealScreenCards(List<Meal> list, context){
   return Column(children: _auxiliarList,);
 }
 
+Widget _mealCard(Meal meal, bool expanded){
+  return CustomCard(
+      child: Column(
+              children: [
+                VerticalSpacing(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomText(meal.name,fontSize: FontSize.big,bold: false,),
+                  ],
+                ),
+                expanded ? _mealItens(meal.foods) : Container(),
+                VerticalSpacing(),
+              ],
+            ),
+  );
+}
+
 //treatment and display of multiple food instances
 Widget _mealItens(List<Food> foods){
   final it = foods.iterator;
   final List<Widget> _auxList = new List<Widget>();
+  _auxList.add(Row(children: [Expanded(child: Padding(padding: EdgeInsets.fromLTRB(Spacing.normal, 0, Spacing.normal, 0),child: Divider(),))],));
   while(it.moveNext()){
     _auxList.addAll([
       Row(children: [
-        HorizontalSpacing(spacing: Spacing.huge,),
-        Icon(Icons.arrow_right_alt_outlined),
-        CustomText(it.current.name),
+        HorizontalSpacing(),
+        Icon(Icons.arrow_right_alt_outlined,color: FontColors.grey,),
+        CustomText(it.current.name, color: FontColors.grey,),
+        HorizontalSpacing(),
+        CustomText(it.current.weight.toString(), color: FontColors.grey,),
+        HorizontalSpacing(spacing: Spacing.small,),
       ],)
     ]);
   }

@@ -1,6 +1,5 @@
-import 'package:diet_controller/interface/meal.dart';
+import 'package:diet_controller/presentation/meal/model/meal.dart';
 import 'package:flutter/foundation.dart';
-
 @immutable
 abstract class MealState {
   const MealState();

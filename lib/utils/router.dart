@@ -1,10 +1,9 @@
 import 'dart:async';
-
-import 'package:diet_controller/presentation/pages/food_screen.dart';
-import 'package:diet_controller/presentation/pages/home_screen.dart';
-import 'package:diet_controller/presentation/pages/login_screen.dart';
-import 'package:diet_controller/presentation/pages/meal_screen.dart';
-import 'package:diet_controller/presentation/pages/splash_screen.dart';
+import 'package:diet_controller/interface/pages/food_screen.dart';
+import 'package:diet_controller/interface/pages/home_screen.dart';
+import 'package:diet_controller/interface/pages/login_screen.dart';
+import 'package:diet_controller/interface/pages/meal_screen.dart';
+import 'package:diet_controller/interface/pages/splash_screen.dart';
 import 'package:diet_controller/utils/route_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

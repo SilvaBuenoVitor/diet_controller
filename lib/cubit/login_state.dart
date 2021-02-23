@@ -14,19 +14,20 @@ class LoginLoading extends LoginState{
 }
 
 class LoginSuccess extends LoginState {
-  final int id;
-  const LoginSuccess(this.id);
+  final Login login;
+
+  LoginSuccess(this.login);
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
   
     return o is LoginSuccess &&
-      o.id == id;
+      o.login == login;
   }
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => login.hashCode;
 }
 
 class LoginFailed extends LoginState{
